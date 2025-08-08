@@ -1,1 +1,1 @@
-web: gunicorn user_profile_manager.wsgi
+web: gunicorn user_profile_manager.wsgi.application
