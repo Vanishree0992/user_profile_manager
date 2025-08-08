@@ -2,18 +2,15 @@ services:
   - type: web
     name: user-profile-manager
     env: python
-    region: oregon # or your preferred region
-    plan: starter # free plan
-    branch: main  # your git branch
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn user_profile_manager.wsgi.application
+    plan: free
+    region: oregon  # or your preferred region
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn user_profile_manager.wsgi"
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: your_project_name.settings
-      - key: SECRET_KEY
-        fromSecret: django_secret_key # add this secret in Render dashboard
+      - key: DJANGO_SECRET_KEY
+        fromDatabase: true
       - key: DEBUG
         value: 'False'
-      - key: DATABASE_URL
-        fromSecret: your_database_url # for managed DB, if any
-    healthCheckPath: /
+      - key: ALLOWED_HOSTS
+        value: '.onrender.com'
+    autoDeploy: true
